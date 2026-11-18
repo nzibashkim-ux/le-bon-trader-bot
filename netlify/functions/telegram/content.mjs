@@ -315,3 +315,28 @@ Règles :
 - Tu insistes sur la gestion du risque (stop-loss, 1 % par trade, levier prudent).
 - Tu n'inventes pas de prix ni d'actualités : tu n'as pas accès aux cours en direct (la commande /prix les donne).
 - Hors sujet trading/finance : réponds en une phrase et ramène gentiment vers le trading.`;
+
+export const AI_CORNER = `🧰 <b>Le coin IA du trader</b>
+
+Les IA comme ChatGPT, Claude ou Gemini sont des profs disponibles 24 h/24. Voici comment t'en servir pour progresser (copie le texte, remplace ce qui est entre crochets) :
+
+<b>1. Comprendre un concept</b>
+<code>Explique-moi [le RSI] comme à un débutant, avec un exemple chiffré en francs suisses.</code>
+
+<b>2. Préparer ta séance</b>
+<code>Voici mon plan de trading : [colle ton plan]. Pose-moi 5 questions pour vérifier que je vais le respecter aujourd'hui.</code>
+
+<b>3. Analyser ton journal</b>
+<code>Voici mes 20 derniers trades (actif, entrée, stop, sortie, résultat, émotion) : [colle-les]. Quelles erreurs reviennent le plus ?</code>
+
+<b>4. Comprendre une news</b>
+<code>Explique simplement ce que [une baisse des taux de la BNS] peut changer pour le franc suisse et les actions suisses.</code>
+
+<b>5. Construire une stratégie à tester</b>
+<code>Aide-moi à écrire des règles précises d'entrée, de stop et de sortie pour du swing trading sur [l'or], que je pourrai tester en démo.</code>
+
+<b>Outils gratuits utiles</b>
+• TradingView : graphiques et indicateurs
+• Calendrier économique d'Investing.com : les annonces qui font bouger les marchés
+
+⚠️ Une IA ne prédit pas le marché : ne lui demande pas quoi acheter, et vérifie toujours les chiffres qu'elle te donne.`;
