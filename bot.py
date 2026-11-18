@@ -31,21 +31,33 @@ def fetch(url):
         return r.read()
 
 
+def api(method, params):
+    """Appelle l'API Telegram. Renvoie la réponse JSON (ok: True/False)."""
+    if not TOKEN or not CHAT_ID:
+        print(f"--- [{method}]\n" + str(params.get("text", params)))
+        return {"ok": True, "result": {"message_id": 1}}
+    data = urllib.parse.urlencode(params).encode()
+    try:
+        with urllib.request.urlopen(urllib.request.Request(
+                f"https://api.telegram.org/bot{TOKEN}/{method}", data=data), timeout=20) as r:
+            return json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        try:
+            return json.loads(e.read())
+        except Exception:
+            return {"ok": False, "description": str(e)}
+    except Exception as e:
+        return {"ok": False, "description": str(e)}
+
+
 def send(text):
     """Envoie un message au canal (découpe si > 4000 caractères)."""
     chunks = [text[i:i + 4000] for i in range(0, len(text), 4000)] or [""]
     for chunk in chunks:
-        if not TOKEN or not CHAT_ID:
-            print("---\n" + chunk)
-            continue
-        data = urllib.parse.urlencode({
-            "chat_id": CHAT_ID, "text": chunk, "parse_mode": "HTML",
-            "disable_web_page_preview": "true"}).encode()
-        try:
-            urllib.request.urlopen(urllib.request.Request(
-                f"https://api.telegram.org/bot{TOKEN}/sendMessage", data=data), timeout=20).read()
-        except Exception as e:
-            print("Erreur Telegram:", e)
+        res = api("sendMessage", {"chat_id": CHAT_ID, "text": chunk, "parse_mode": "HTML",
+                                  "disable_web_page_preview": "true"})
+        if not res.get("ok"):
+            print("Erreur Telegram:", res.get("description"))
         time.sleep(1.2)
 
 
@@ -126,6 +138,43 @@ def daily_summary(cfg, state, quotes):
     state["last_summary"] = today
 
 
+def live_board(cfg, state, quotes):
+    """Tableau des marchés en direct : un seul message épinglé, mis à jour à chaque passage."""
+    if not quotes:
+        return
+    try:
+        from zoneinfo import ZoneInfo
+        now = datetime.now(ZoneInfo("Europe/Zurich"))
+    except Exception:
+        now = datetime.now(timezone.utc)
+    order = list(cfg.get("actions", {})) + list(cfg.get("cryptos", {}))
+    lines = ["📊 <b>MARCHÉS EN DIRECT</b>",
+             f"<i>Mis à jour le {now.strftime('%d/%m à %H:%M')} — actualisé toutes les 15 min</i>", ""]
+    for name in order:
+        if name in quotes:
+            lines.append(f"<b>{html.escape(name)}</b> : {fmt_price(quotes[name])}")
+    lines += ["", cfg.get("disclaimer", "")]
+    text = "\n".join(lines)
+    mid = state.get("board_id")
+    if mid:
+        res = api("editMessageText", {"chat_id": CHAT_ID, "message_id": mid, "text": text,
+                                      "parse_mode": "HTML", "disable_web_page_preview": "true"})
+        desc = str(res.get("description", ""))
+        if res.get("ok") or "not modified" in desc:
+            return
+        print("Tableau introuvable, on le recrée :", desc)
+    res = api("sendMessage", {"chat_id": CHAT_ID, "text": text, "parse_mode": "HTML",
+                              "disable_web_page_preview": "true", "disable_notification": "true"})
+    if res.get("ok"):
+        state["board_id"] = res["result"]["message_id"]
+        pin = api("pinChatMessage", {"chat_id": CHAT_ID, "message_id": state["board_id"],
+                                     "disable_notification": "true"})
+        if not pin.get("ok"):
+            print("Épinglage impossible :", pin.get("description"))
+    else:
+        print("Erreur tableau :", res.get("description"))
+
+
 # ---------- News & tweets (RSS) ----------
 def parse_feed(raw):
     root = ET.fromstring(raw)
@@ -178,6 +227,7 @@ def main():
     cfg = load(CONFIG_PATH, {})
     state = load(STATE_PATH, {})
     quotes = get_all_quotes(cfg)
+    live_board(cfg, state, quotes)
     check_alerts(cfg, state, quotes)
     daily_summary(cfg, state, quotes)
     check_feeds(cfg, state, "news", "📰")
