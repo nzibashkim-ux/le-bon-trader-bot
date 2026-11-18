@@ -34,7 +34,7 @@
   },
   "Or": {
    "day": "2026-11-18",
-   "level": 0
+   "level": 1
   },
   "EUR/CHF": {
    "day": "2026-11-18",
@@ -42,7 +42,7 @@
   },
   "Bitcoin": {
    "day": "2026-11-18",
-   "level": 0
+   "level": 1
   },
   "Ethereum": {
    "day": "2026-11-18",
@@ -170,18 +170,30 @@
    "6cc4768b-f8ed-486b-9e52-88b613e2a599"
   ],
   "https://fr.investing.com/rss/news.rss": [
+   "https://fr.investing.com/news/sec-filings/vivakor-emet-317-millions-dactions-pour-convertir-des-dettes-93CH-3703588",
+   "https://fr.investing.com/news/company-news/permapipe-annonce-65m-de-commandes-au-t3-et-acquiert-une-participation-en-inde-93CH-3703587",
+   "https://fr.investing.com/news/sec-filings/newtek-business-services-corp-cloture-un-placement-prive-de-5-millions--en-obligations-senior-echeant-en-2029-93CH-3703586",
+   "https://fr.investing.com/news/economy-news/kashkari-fed--les-taux-dinteret-peuvent-freiner-linvestissement-tech-3703584",
+   "https://fr.investing.com/news/sec-filings/imax-corp-annonce-un-nouvel-accord-demploi-avec-mark-welton-des-janvier-2027-93CH-3703582",
+   "https://fr.investing.com/news/company-news/medirom-healthcare-risque-une-radiation-du-nasdaq-pour-depot-tardif-93CH-3703580",
+   "https://fr.investing.com/news/company-news/chemours-nomme-amy-rocklin-au-poste-de-conseillere-juridique-93CH-3703579",
+   "https://fr.investing.com/news/earnings/le-bpa-de-beam-global-a-depasse-les-attentes-de-005-le-ca--en-dessous-des-previsions-3703578",
+   "https://fr.investing.com/news/sec-filings/fulgent-genetics-signe-un-bail-au-massachusetts-pour-13207183-par-mois-93CH-3703577",
+   "https://fr.investing.com/news/insider-trading-news/la-svp--cato-dameren-corp-cede-des-actions-pour-57725-93CH-3703575",
    "https://fr.investing.com/news/stock-market-news/pourquoi-le-titre-arm-estil-en-hausse-aujourdhui--93CH-3703144",
-   "https://fr.investing.com/news/analyst-ratings/td-cowen-reitere-son-avis-dachat-sur-gilead-sciences-grace-a-yeztugo-93CH-3703140",
-   "https://fr.investing.com/news/stock-market-news/pourquoi-laction-amazoncom-inc-grimpetelle-aujourdhui--93CH-3703139",
-   "https://fr.investing.com/news/stock-market-news/pourquoi-laction-crowdstrike-holdings-inc-estelle-en-hausse-aujourdhui--93CH-3703138",
-   "https://fr.investing.com/news/stock-market-news/laction-deere--company-pourrait-bouger-de-61-lors-des-resultats-du-2511-93CH-3703135",
-   "https://fr.investing.com/news/earnings/les-investisseurs-de-tsakos-energy-se-preparent-aux-resultats-trimestriels-93CH-3703134",
-   "https://fr.investing.com/news/stock-market-news/les-options-de-li-auto-suggerent-un-mouvement-de-55-lors-des-resultats-du-25-novembre-93CH-3703133",
    "https://fr.investing.com/news/earnings/les-resultats-de-liquidity-services-sous-pression-sur-le-chiffre-daffaires-93CH-3703132",
+   "https://fr.investing.com/news/stock-market-news/pourquoi-laction-crowdstrike-holdings-inc-estelle-en-hausse-aujourdhui--93CH-3703138",
+   "https://fr.investing.com/news/stock-market-news/les-actions-gds-holdings-pourraient-bouger-de-55-lors-des-resultats-du-2511-93CH-3703130",
+   "https://fr.investing.com/news/stock-market-news/pourquoi-laction-amazoncom-inc-grimpetelle-aujourdhui--93CH-3703139",
+   "https://fr.investing.com/news/analyst-ratings/td-cowen-reitere-son-avis-dachat-sur-gilead-sciences-grace-a-yeztugo-93CH-3703140",
    "https://fr.investing.com/news/stock-market-news/pourquoi-laction-chevron-corp-reculetelle-aujourdhui--93CH-3703131",
-   "https://fr.investing.com/news/stock-market-news/les-actions-gds-holdings-pourraient-bouger-de-55-lors-des-resultats-du-2511-93CH-3703130"
+   "https://fr.investing.com/news/stock-market-news/laction-deere--company-pourrait-bouger-de-61-lors-des-resultats-du-2511-93CH-3703135",
+   "https://fr.investing.com/news/stock-market-news/les-options-de-li-auto-suggerent-un-mouvement-de-55-lors-des-resultats-du-25-novembre-93CH-3703133",
+   "https://fr.investing.com/news/earnings/les-investisseurs-de-tsakos-energy-se-preparent-aux-resultats-trimestriels-93CH-3703134"
   ],
   "https://journalducoin.com/feed/": [
+   "https://journalducoin.com/?p=830592",
+   "https://journalducoin.com/?p=830487",
    "https://journalducoin.com/?p=830472",
    "https://journalducoin.com/?p=830394",
    "https://journalducoin.com/?p=830471",
@@ -190,8 +202,50 @@
    "https://journalducoin.com/?p=830470",
    "https://journalducoin.com/?p=830507",
    "https://journalducoin.com/?p=830423",
+   "https://journalducoin.com/?p=830507",
    "https://journalducoin.com/?p=830434",
-   "https://journalducoin.com/?p=830441"
+   "https://journalducoin.com/?p=830447",
+   "https://journalducoin.com/?p=830472",
+   "https://journalducoin.com/?p=830394",
+   "https://journalducoin.com/?p=830423",
+   "https://journalducoin.com/?p=830441",
+   "https://journalducoin.com/?p=830471",
+   "https://journalducoin.com/?p=830470",
+   "https://journalducoin.com/?p=830502"
+  ],
+  "https://www.cointribune.com/feed/": [
+   "https://www.cointribune.com/?p=1007232",
+   "https://www.cointribune.com/?p=1007184",
+   "https://www.cointribune.com/?p=1007119",
+   "https://www.cointribune.com/?p=1007157",
+   "https://www.cointribune.com/?p=999780",
+   "https://www.cointribune.com/?p=1007127",
+   "https://www.cointribune.com/?p=1007087",
+   "https://www.cointribune.com/?p=1007066",
+   "https://www.cointribune.com/?p=1007105",
+   "https://www.cointribune.com/?p=1006985"
+  ],
+  "https://cryptoast.fr/feed/": [
+   "https://cryptoast.fr/?p=234030",
+   "https://cryptoast.fr/?p=234024",
+   "https://cryptoast.fr/?p=234014",
+   "https://cryptoast.fr/?p=234009",
+   "https://cryptoast.fr/?p=234002",
+   "https://cryptoast.fr/?p=233997",
+   "https://cryptoast.fr/?p=233989",
+   "https://cryptoast.fr/?p=233983",
+   "https://cryptoast.fr/?p=233964",
+   "https://cryptoast.fr/?p=233966",
+   "https://cryptoast.fr/?p=233957",
+   "https://cryptoast.fr/?p=233961",
+   "https://cryptoast.fr/?p=233951",
+   "https://cryptoast.fr/?p=233946",
+   "https://cryptoast.fr/?p=233920",
+   "https://cryptoast.fr/?p=233898",
+   "https://cryptoast.fr/?p=233909",
+   "https://cryptoast.fr/?p=233893",
+   "https://cryptoast.fr/?p=233737",
+   "https://cryptoast.fr/?p=233868"
   ]
  },
  "board_id": 9
