@@ -222,29 +222,24 @@ ${L > 10 ? "⚠️ Levier élevé : très dangereux sans expérience." : "Garde 
 // ---------- Cours en direct ----------
 const CRYPTO = { btc: "bitcoin", bitcoin: "bitcoin", eth: "ethereum", ethereum: "ethereum", sol: "solana", solana: "solana", xrp: "ripple", ada: "cardano", doge: "dogecoin", bnb: "binancecoin" };
 const ALIAS = { or: "GC=F", gold: "GC=F", argent: "SI=F", petrole: "CL=F", smi: "^SSMI", sp500: "^GSPC", "s&p500": "^GSPC", nasdaq: "^IXIC", dax: "^GDAXI", cac: "^FCHI", cac40: "^FCHI", eurchf: "EURCHF=X", usdchf: "CHF=X", eurusd: "EURUSD=X", nestle: "NESN.SW", ubs: "UBSG.SW", novartis: "NOVN.SW", roche: "ROG.SW" };
+const CRYPTO_Y = { btc: "BTC-USD", bitcoin: "BTC-USD", eth: "ETH-USD", ethereum: "ETH-USD", sol: "SOL-USD", solana: "SOL-USD", xrp: "XRP-USD", ada: "ADA-USD", doge: "DOGE-USD", bnb: "BNB-USD" };
+const NAMES = { "^SSMI": "SMI", "^GSPC": "S&P 500", "^IXIC": "Nasdaq", "^GDAXI": "DAX", "^FCHI": "CAC 40", "GC=F": "Or", "SI=F": "Argent", "CL=F": "Pétrole", "EURCHF=X": "EUR/CHF", "CHF=X": "USD/CHF", "EURUSD=X": "EUR/USD", "BTC-USD": "Bitcoin", "ETH-USD": "Ethereum", "SOL-USD": "Solana", "XRP-USD": "XRP", "ADA-USD": "Cardano", "DOGE-USD": "Dogecoin", "BNB-USD": "BNB" };
 
 async function quote(q) {
   const k = norm(q).replace(/[\s/]/g, "");
-  if (CRYPTO[k]) {
-    const id = CRYPTO[k];
-    const d = await (await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd,chf&include_24hr_change=true`, { headers: UA })).json();
-    const x = d[id];
-    if (!x) return null;
-    return { name: id[0].toUpperCase() + id.slice(1), price: x.usd, cur: "USD", chg: x.usd_24h_change || 0, extra: `≈ ${fmt(x.chf)} CHF` };
-  }
-  const sym = ALIAS[k] || q.toUpperCase();
+  const sym = CRYPTO_Y[k] || ALIAS[k] || q.toUpperCase();
   const d = await (await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=1d`, { headers: UA })).json();
   const m = d?.chart?.result?.[0]?.meta;
   if (!m || m.regularMarketPrice == null) return null;
   const prev = m.previousClose || m.chartPreviousClose;
-  return { name: m.shortName || m.longName || sym, sym, price: m.regularMarketPrice, cur: m.currency || "", chg: prev ? (m.regularMarketPrice - prev) / prev * 100 : 0 };
+  return { name: NAMES[sym] || m.shortName || m.longName || sym, sym, price: m.regularMarketPrice, cur: m.currency || "", chg: prev ? (m.regularMarketPrice - prev) / prev * 100 : 0 };
 }
 
 async function priceText(q) {
   try {
     const x = await quote(q);
     if (!x) return `❓ Je ne trouve pas <b>${esc(q)}</b>. Essaie un symbole Yahoo (ex. <code>AAPL</code>, <code>NESN.SW</code>, <code>EURUSD=X</code>) ou <code>btc</code>, <code>or</code>, <code>smi</code>.`;
-    return `${x.chg >= 0 ? "🟢" : "🔴"} <b>${esc(x.name)}</b>${x.sym ? ` (${esc(x.sym)})` : ""}\nPrix : <b>${fmt(x.price, x.price < 1 ? 6 : 2)} ${esc(x.cur)}</b>${x.extra ? ` (${x.extra})` : ""}\nVariation : <b>${x.chg >= 0 ? "+" : ""}${fmt(x.chg)} %</b>${x.sym ? " sur la séance" : " sur 24 h"}`;
+    return `${x.chg >= 0 ? "🟢" : "🔴"} <b>${esc(x.name)}</b>${x.sym ? ` (${esc(x.sym)})` : ""}\nPrix : <b>${fmt(x.price, x.price < 1 ? 6 : 2)} ${esc(x.cur)}</b>${x.extra ? ` (${x.extra})` : ""}\nVariation : <b>${x.chg >= 0 ? "+" : ""}${fmt(x.chg)} %</b>${/-USD$/.test(x.sym) ? " sur 24 h" : " sur la séance"}`;
   } catch {
     return "⚠️ Les cours ne répondent pas pour le moment, réessaie dans une minute.";
   }
