@@ -1,0 +1,28 @@
+name: Market Bot
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # toutes les 15 min
+  workflow_dispatch:          # bouton "Run workflow" pour tester
+
+permissions:
+  contents: write
+
+concurrency: market-bot
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lancer le bot
+        run: python3 bot.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Sauvegarder la mémoire du bot
+        run: |
+          git config user.name "market-bot"
+          git config user.email "market-bot@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || (git commit -m "maj state" && git push)
