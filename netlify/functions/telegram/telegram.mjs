@@ -1,7 +1,7 @@
 // Bot privé « Le bon trader » : webhook Telegram hébergé en fonction Netlify.
 // Variables Netlify : TELEGRAM_TOKEN (obligatoire), CHANNEL_ID (accès réservé aux membres du canal),
 // ANTHROPIC_API_KEY (optionnel : active l'IA), CLAUDE_MODEL (optionnel), JOIN_LINK (optionnel).
-import { LESSONS, GLOSSARY, QUIZ, AI_SYSTEM } from "./content.mjs";
+import { LESSONS, GLOSSARY, QUIZ, AI_SYSTEM, AI_CORNER } from "./content.mjs";
 
 const TOKEN = process.env.TELEGRAM_TOKEN || "";
 const CHANNEL_ID = process.env.CHANNEL_ID || "";
@@ -55,7 +55,8 @@ const BACK = [[{ text: "🏠 Menu", callback_data: "m" }]];
 const MENU = [
   [{ text: "📚 Leçons", callback_data: "L" }, { text: "📖 Lexique", callback_data: "x:0" }],
   [{ text: "🧮 Calculateurs", callback_data: "c" }, { text: "🧠 Quiz", callback_data: "q" }],
-  [{ text: "📈 Cours en direct", callback_data: "p" }, { text: "🤖 Pose ta question", callback_data: "ai" }],
+  [{ text: "📈 Cours en direct", callback_data: "p" }, { text: "🧰 Coin IA", callback_data: "r" }],
+  [{ text: "🤖 Pose ta question", callback_data: "ai" }],
 ];
 
 // ---------- Accès réservé aux membres du canal ----------
@@ -74,6 +75,7 @@ Je suis là pour t'apprendre le trading, pas à pas :
 📖 Un <b>lexique</b> de plus de 50 mots
 🧮 Des <b>calculateurs</b> : taille de position, R:R, levier…
 🧠 Des <b>quiz</b> pour t'entraîner
+🧰 Le <b>coin IA</b> : comment utiliser ChatGPT ou Claude pour progresser
 📈 Les <b>cours en direct</b> : /prix btc, /prix AAPL
 🤖 ${AI_KEY ? "Pose-moi <b>n'importe quelle question</b> en écrivant simplement ton message" : "Écris un mot (ex. <i>levier</i>) et je t'explique"}
 
@@ -286,8 +288,9 @@ async function onMessage(msg) {
   const cmd = rawCmd.startsWith("/") ? rawCmd.slice(1).split("@")[0].toLowerCase() : null;
 
   if (cmd === "start" || cmd === "menu") return send(chat, welcome(msg.from.first_name), MENU);
-  if (cmd === "aide" || cmd === "help") return send(chat, `${welcome(msg.from.first_name)}\n\n<b>Commandes</b>\n/lecons • /lexique • /def mot • /quiz\n/position • /rr • /perte • /levier • /interets\n/prix symbole • /marches`, MENU);
+  if (cmd === "aide" || cmd === "help") return send(chat, `${welcome(msg.from.first_name)}\n\n<b>Commandes</b>\n/lecons • /lexique • /def mot • /quiz • /ia\n/position • /rr • /perte • /levier • /interets\n/prix symbole • /marches`, MENU);
   if (cmd === "lecons") return send(chat, ...lessonsMenu());
+  if (cmd === "ia" || cmd === "ressources") return send(chat, AI_CORNER, BACK);
   if (cmd === "lexique") return send(chat, ...glossaryPage(0));
   if (cmd === "quiz") return send(chat, ...quizQuestion(Math.floor(Math.random() * QUIZ.length)));
   if (cmd === "calcul" || cmd === "calculateurs") return send(chat, CALC_HELP, BACK);
@@ -343,6 +346,7 @@ async function onCallback(cb) {
     return j < 0 ? edit(chat, mid, ...quizQuestion(i)) : edit(chat, mid, ...quizAnswer(i, j));
   }
   if (k === "c") return edit(chat, mid, CALC_HELP, BACK);
+  if (k === "r") return edit(chat, mid, AI_CORNER, BACK);
   if (k === "p") return edit(chat, mid, await board(), BACK);
   if (k === "ai") return edit(chat, mid, AI_KEY
     ? "🤖 <b>Pose ta question</b>\n\nÉcris-la simplement dans le chat, par exemple :\n• <i>C'est quoi un pip ?</i>\n• <i>Comment placer mon stop-loss ?</i>\n• <i>Explique-moi le RSI comme si j'avais 12 ans</i>\n\nTu peux aussi répondre à un de mes messages pour approfondir."
@@ -363,6 +367,7 @@ export default async (req, context) => {
         { command: "lecons", description: "Les 12 leçons de trading" },
         { command: "lexique", description: "Le lexique du trader" },
         { command: "quiz", description: "Teste tes connaissances" },
+        { command: "ia", description: "Le coin IA du trader" },
         { command: "position", description: "Calcul de taille de position" },
         { command: "rr", description: "Ratio risque/rendement" },
         { command: "levier", description: "Simuler un effet de levier" },
