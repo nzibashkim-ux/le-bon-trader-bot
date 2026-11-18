@@ -1,0 +1,35 @@
+{
+  "seuil_alerte_pct": 3,
+  "heure_resume_utc": 7,
+  "max_posts_par_flux": 3,
+  "disclaimer": "ℹ️ Infos uniquement, pas un conseil en investissement.",
+
+  "actions": {
+    "Apple": "AAPL",
+    "Nvidia": "NVDA",
+    "Tesla": "TSLA",
+    "Nestlé": "NESN.SW",
+    "UBS": "UBSG.SW",
+    "S&P 500": "^GSPC",
+    "Nasdaq": "^IXIC",
+    "SMI": "^SSMI",
+    "Or": "GC=F",
+    "EUR/CHF": "EURCHF=X"
+  },
+
+  "cryptos": {
+    "Bitcoin": "bitcoin",
+    "Ethereum": "ethereum",
+    "Solana": "solana"
+  },
+
+  "news": {
+    "Yahoo Finance": "https://finance.yahoo.com/news/rssindex",
+    "CNBC Marchés": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
+    "CoinDesk": "https://www.coindesk.com/arc/outboundfeeds/rss/"
+  },
+
+  "mots_cles": [],
+
+  "tweets": {}
+}
