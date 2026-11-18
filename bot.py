@@ -227,7 +227,7 @@ def main():
     cfg = load(CONFIG_PATH, {})
     state = load(STATE_PATH, {})
     quotes = get_all_quotes(cfg)
-    live_board(cfg, state, quotes)
+    # Le tableau en direct est géré par Cloudflare (toutes les 2 min)
     check_alerts(cfg, state, quotes)
     daily_summary(cfg, state, quotes)
     check_feeds(cfg, state, "news", "📰")
