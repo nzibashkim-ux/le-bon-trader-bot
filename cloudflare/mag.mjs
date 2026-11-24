@@ -183,9 +183,9 @@ h2{font-family:"Playfair Display",Georgia,serif;font-size:28px;margin:34px 0 14p
 .markets{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .mgroup{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px}
 .mgroup h4{margin:0 0 6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.mrow{display:grid;grid-template-columns:1fr auto 84px;gap:8px;padding:6px 0;border-top:1px solid #f1ece3;font-size:14.5px;align-items:center}
+.mrow{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:6px 0;border-top:1px solid #f1ece3;font-size:14.5px;align-items:center}
 .mrow:first-of-type{border-top:0}.px{font-variant-numeric:tabular-nums;font-weight:600}.px small{color:var(--muted);font-weight:500}
-.chg{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;border-radius:6px;padding:2px 6px}
+.chg{text-align:right;white-space:nowrap;min-width:84px;font-weight:700;font-variant-numeric:tabular-nums;border-radius:6px;padding:2px 6px}
 .chg.up{color:var(--up);background:#e7f5ee}.chg.down{color:var(--down);background:#fbeaea}
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:14px}
 .fact{background:var(--ink);color:#fff;border-radius:14px;padding:14px 16px}
@@ -206,7 +206,7 @@ h2{font-family:"Playfair Display",Georgia,serif;font-size:28px;margin:34px 0 14p
 .list a span{color:var(--muted);font-weight:500}
 footer{margin:40px 0 0;padding:24px 0 40px;border-top:3px double var(--ink);font-size:13px;color:var(--muted);text-align:center}
 footer a{color:var(--red);font-weight:600}
-@media(max-width:760px){.une,.learn{grid-template-columns:1fr}h2{font-size:24px}.mrow{grid-template-columns:1fr auto 78px}}`;
+@media(max-width:760px){.une,.learn{grid-template-columns:1fr}h2{font-size:24px}.mrow{grid-template-columns:1fr auto auto}}`;
 
 function page(title, body, { refresh = false, ticker = "" } = {}) {
   return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
