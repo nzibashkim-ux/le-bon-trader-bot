@@ -1,6 +1,6 @@
 {
   "seuil_alerte_pct": 3,
-  "heure_resume_utc": 7,
+  "heure_resume_utc": 99,
   "max_posts_par_flux": 2,
   "disclaimer": "ℹ️ Infos uniquement, pas un conseil en investissement.",
   "actions": {
@@ -20,12 +20,7 @@
     "Ethereum": "ethereum",
     "Solana": "solana"
   },
-  "news": {
-    "Investing.com": "https://fr.investing.com/rss/news.rss",
-    "Journal du Coin": "https://journalducoin.com/feed/",
-    "Cointribune": "https://www.cointribune.com/feed/",
-    "Cryptoast": "https://cryptoast.fr/feed/"
-  },
+  "news": {},
   "mots_cles": [],
   "tweets": {}
 }
