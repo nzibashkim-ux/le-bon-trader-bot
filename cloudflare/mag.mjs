@@ -350,7 +350,7 @@ async function post(env, text, button, url) {
 export async function morningPost(env, origin) {
   const ed = await collectEdition();
   const titles = ed.une.slice(0, 3).map((i) => `• ${esc(i.title)}`).join("\n");
-  return post(env, `📰 <b>Le Mag des marchés du ${esc(longDate(ed.day))}</b>\n\nÀ la une ce matin :\n${titles || "• Les premières nouvelles arrivent"}\n\nCours, économie, entreprises, crypto et la leçon du jour : tout est dans le Mag, mis à jour en direct toute la journée.`, "📖 Lire le Mag du jour", `${origin}/`);
+  return post(env, `📰 <b>Le Mag des marchés du ${esc(longDate(ed.day))}</b>\n\nÀ la une ce matin :\n${titles || "• Les premières nouvelles arrivent"}\n\nCours, économie, entreprises, crypto et la leçon du jour : tout est dans le Mag, mis à jour en direct toute la journée.`, "📖 Lire le Mag du jour", `${origin}/ouvrir`);
 }
 
 // Le soir : archive l'édition du jour ; le dernier jour du mois, publie le récap
@@ -364,7 +364,7 @@ export async function eveningArchive(env, origin) {
     await env.MAG.put(`recap:${mk}`, JSON.stringify(r));
     const top = [...r.perf].sort((a, b) => b.q.chg - a.q.chg);
     const lines = top.length ? `🥇 ${esc(top[0].name)} ${fmtChg(top[0].q.chg)}\n📉 ${esc(top[top.length - 1].name)} ${fmtChg(top[top.length - 1].q.chg)}` : "";
-    await post(env, `📅 <b>Le Récap de ${esc(monthLabel(mk))} est en ligne</b>\n\nLes performances du mois, les gagnants et les perdants, et les faits marquants jour après jour.\n\n${lines}`, "📊 Lire le récap du mois", `${origin}/mag/recap/${mk}`);
+    await post(env, `📅 <b>Le Récap de ${esc(monthLabel(mk))} est en ligne</b>\n\nLes performances du mois, les gagnants et les perdants, et les faits marquants jour après jour.\n\n${lines}`, "📊 Lire le récap du mois", `${origin}/ouvrir?p=/mag/recap/${mk}`);
   }
   return ed.day;
 }
