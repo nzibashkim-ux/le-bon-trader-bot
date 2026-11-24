@@ -349,7 +349,7 @@ async function post(env, text, button, url) {
 export async function morningPost(env, origin) {
   const ed = await collectEdition();
   const titles = ed.une.slice(0, 3).map((i) => `• ${esc(i.title)}`).join("\n");
-  return post(env, `📰 <b>Le Mag des marchés du ${esc(longDate(ed.day))}</b>\n\nÀ la une ce matin :\n${titles || "• Les premières nouvelles arrivent"}\n\nCours, économie, entreprises, crypto et la leçon du jour : tout est dans le Mag, mis à jour en direct toute la journée.`, "📖 Lire le Mag du jour", `${origin}/mag`);
+  return post(env, `📰 <b>Le Mag des marchés du ${esc(longDate(ed.day))}</b>\n\nÀ la une ce matin :\n${titles || "• Les premières nouvelles arrivent"}\n\nCours, économie, entreprises, crypto et la leçon du jour : tout est dans le Mag, mis à jour en direct toute la journée.`, "📖 Lire le Mag du jour", `${origin}/`);
 }
 
 // Le soir : archive l'édition du jour ; le dernier jour du mois, publie le récap
