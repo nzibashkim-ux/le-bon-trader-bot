@@ -8,7 +8,6 @@
 import { LESSONS, GLOSSARY } from "./content.mjs";
 
 const UA = { "User-Agent": "Mozilla/5.0 (LeBonTraderMag)" };
-const BOT_LINK = "https://t.me/marches_vip_infos_bot";
 
 const SECTIONS = [
   { id: "eco", title: "Économie & banques centrales", emoji: "🌍", color: "#1f4e8c",
@@ -215,7 +214,7 @@ ${refresh ? '<meta http-equiv="refresh" content="600">' : ""}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>${CSS}</style></head><body>${ticker}<div class="wrap">${body}
-<footer><p><b>Le Mag des marchés</b> par Le bon trader 🇨🇭 · <a href="/mag">Édition du jour</a> · <a href="/mag/archives">Archives et récaps</a> · <a href="${BOT_LINK}">Le bot privé</a></p>
+<footer><p><b>Le Mag des marchés</b> par Le bon trader 🇨🇭 · <a href="/mag">Édition du jour</a> · <a href="/mag/archives">Archives et récaps</a></p>
 <p>Les titres renvoient vers les articles de leurs auteurs : Investing.com, Cryptoast, Journal du Coin, Cointribune. Cours : Yahoo Finance.</p>
 <p>ℹ️ Informations uniquement, pas un conseil en investissement.</p></footer></div></body></html>`;
 }
@@ -238,7 +237,7 @@ export function renderEdition(ed, { live = false } = {}) {
   const lesson = LESSONS[dn % LESSONS.length];
   const keys = Object.keys(GLOSSARY).sort();
   const [wordTitle, wordText] = GLOSSARY[keys[(dn * 7) % keys.length]];
-  const lessonIntro = cut(strip(lesson.b.split("\n\n").slice(0, 2).join(" ")), 320);
+  const lessonIntro = cut(strip(lesson.b.split("\n\n").slice(0, 3).join(" ")), 560);
   const dl = longDate(ed.day);
 
   const ticker = rows.length ? `<div class="ticker"><div class="t">${[0, 1].map(() => rows.map((r) => `<span>${esc(r.name)} <b>${fmtNum(r.q.price)}</b> <em class="${r.q.chg >= 0 ? "up" : "down"}">${fmtChg(r.q.chg)}</em></span>`).join("")).join("")}</div></div>` : "";
@@ -257,7 +256,7 @@ ${best && worst ? `<div class="facts"><div class="fact"><small>Plus forte hausse
 ${ed.sections.map((s) => { const S = SEC[s.id]; return `<section id="${s.id}"><h2><span class="em" style="background:${S.color}">${S.emoji}</span>${esc(S.title)}</h2>
 ${s.items.length ? `<div class="grid">${s.items.map((i) => card(i)).join("")}</div>` : `<p class="empty">Pas de nouvelle dans cette rubrique ce jour-là.</p>`}</section>`; }).join("")}
 <section id="apprendre"><h2><span class="em" style="background:#6b3fa0">💡</span>Apprendre en 2 minutes</h2>
-<div class="learn"><div class="box"><div class="meta">La leçon du jour</div><h3>${esc(lesson.t)}</h3><p>${esc(lessonIntro)}</p><a class="btn" href="${BOT_LINK}" target="_blank" rel="noopener">Lire la suite dans le bot →</a></div>
+<div class="learn"><div class="box"><div class="meta">La leçon du jour</div><h3>${esc(lesson.t)}</h3><p>${esc(lessonIntro)}</p></div>
 <div class="box"><div class="meta">Le mot du jour</div><h3>${esc(wordTitle)}</h3><p>${esc(wordText)}</p></div></div></section>`;
   return page(`Le Mag des marchés — ${dl}`, body, { refresh: live, ticker });
 }
@@ -337,12 +336,14 @@ export async function handleMag(req, env, ctx) {
 }
 
 // ---------- Tâches planifiées ----------
+// Publie dans le canal VIP et dans le canal gratuit (s'il est configuré)
 async function post(env, text, button, url) {
-  return fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`, {
+  const chats = [env.CHANNEL_ID, env.FREE_CHANNEL_ID].filter(Boolean);
+  return Promise.all(chats.map((chat_id) => fetch(`https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ chat_id: env.CHANNEL_ID, text, parse_mode: "HTML", disable_web_page_preview: true, reply_markup: { inline_keyboard: [[{ text: button, url }]] } }),
-  }).then((r) => r.json()).catch((e) => ({ ok: false, description: String(e) }));
+    body: JSON.stringify({ chat_id, text, parse_mode: "HTML", disable_web_page_preview: true, reply_markup: { inline_keyboard: [[{ text: button, url }]] } }),
+  }).then((r) => r.json()).catch((e) => ({ ok: false, description: String(e) }))));
 }
 
 // Le matin : annonce de l'édition du jour dans le canal (un seul message)
